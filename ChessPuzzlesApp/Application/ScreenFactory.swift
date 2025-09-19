@@ -8,7 +8,8 @@
 import SwiftUI
 
 enum Screen : Hashable {
-    case tab1
+    case puzzles
+    case nQueensOverview
 }
 
 final class ScreenFactory {
@@ -20,8 +21,13 @@ final class ScreenFactory {
     
     func viewFor(screen: Screen) -> some View {
         switch screen {
-        case .tab1:
-            return AnyView(EmptyView())
+        case .puzzles:
+            return AnyView(PuzzlesView())
+            case .nQueensOverview:
+            return AnyView(NQueensOverviewView(viewModel:
+                                                NQueensOverviewViewModel(nQueensRepo:
+                                                                            container.nqRepoUseCase)))
+        
         }
     }
 }

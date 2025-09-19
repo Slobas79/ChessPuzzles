@@ -20,10 +20,10 @@ final class Navigation: ObservableObject {
     @ViewBuilder
     func createTabBar() -> some View {
         TabView {
-            factory.viewFor(screen: .tab1)
+            factory.viewFor(screen: .puzzles)
                 .environmentObject(Navigation(factory: factory))
                 .tabItem {
-                    Label("First", systemImage: "menucard")
+                    Label("Puzzles", systemImage: "menucard")
                 }
         }
     }
