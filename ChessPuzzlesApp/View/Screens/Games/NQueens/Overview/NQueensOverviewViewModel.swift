@@ -9,7 +9,7 @@ import Foundation
 
 struct NQGameStateItem: Identifiable {
     var id: UUID = UUID()
-    let state: NQueensGameState
+    let state: GameState
 }
 
 @Observable
@@ -52,23 +52,34 @@ class NQueensOverviewViewModel {
     private func createMockSavedGames() -> [NQGameStateItem] {
         [
             NQGameStateItem(
-                state: NQueensGameState(
+                state: GameState(
                     size: 8,
-                    placedQueens: [Position(row: 0, column: 0), Position(row: 1, column: 2), Position(row: 2, column: 5)],
+                    placedFigures: [FigurePosition(position: Position(row: 0, column: 0), figure: .queen),
+                                    FigurePosition(position: Position(row: 1, column: 2), figure: .queen),
+                                    FigurePosition(position: Position(row: 2, column: 5), figure: .queen)],
                     name: "8x8 - In Progress"
                 )
             ),
             NQGameStateItem(
-                state: NQueensGameState(
+                state: GameState(
                     size: 6,
-                    placedQueens: [Position(row: 0, column: 1), Position(row: 1, column: 3), Position(row: 2, column: 5), Position(row: 3, column: 0), Position(row: 4, column: 2), Position(row: 5, column: 4)],
+                    placedFigures: [FigurePosition(position: Position(row: 0, column: 1), figure: .queen),
+                                    FigurePosition(position: Position(row: 1, column: 3), figure: .queen),
+                                    FigurePosition(position: Position(row: 2, column: 5), figure: .queen),
+                                    FigurePosition(position: Position(row: 3, column: 0), figure: .queen),
+                                    FigurePosition(position: Position(row: 4, column: 2), figure: .queen),
+                                    FigurePosition(position: Position(row: 5, column: 4), figure: .queen)],
                     name: "6x6 - Completed"
                 )
             ),
             NQGameStateItem(
-                state: NQueensGameState(
+                state: GameState(
                     size: 10,
-                    placedQueens: [Position(row: 0, column: 0), Position(row: 1, column: 2), Position(row: 2, column: 5), Position(row: 3, column: 7), Position(row: 4, column: 9)],
+                    placedFigures: [FigurePosition(position: Position(row: 0, column: 0), figure: .queen),
+                                    FigurePosition(position: Position(row: 1, column: 2), figure: .queen),
+                                    FigurePosition(position: Position(row: 2, column: 5), figure: .queen),
+                                    FigurePosition(position: Position(row: 3, column: 7), figure: .queen),
+                                    FigurePosition(position: Position(row: 4, column: 9), figure: .queen)],
                     name: "10x10 - Challenge"
                 )
             )

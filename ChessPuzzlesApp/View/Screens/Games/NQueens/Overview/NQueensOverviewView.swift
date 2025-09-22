@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct NQueensOverviewView: View {
-    @State private var viewModel: NQueensOverviewViewModel
+    var viewModel: NQueensOverviewViewModel
     @EnvironmentObject private var navigation: Navigation
 
     init(viewModel: NQueensOverviewViewModel) {
-        self._viewModel = State(wrappedValue: viewModel)
+        self.viewModel = viewModel
     }
 
     var body: some View {
@@ -45,10 +45,11 @@ struct NQueensOverviewView: View {
                 .font(.headline)
 
             Button("Start New Game") {
-                viewModel.startNewGame()
+                navigation.navigate(to: .nQueensGame(nil))
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
+            .navigate()
         }
         .padding()
         .background(Color(.systemGray6))
@@ -103,8 +104,12 @@ struct NQueensOverviewView: View {
         LazyVStack(spacing: 12) {
             ForEach(savedGames) { savedGame in
                 savedGameRow(savedGame)
+                    .onTapGesture {
+                        navigation.navigate(to: .nQueensGame(savedGame.state))
+                    }
             }
         }
+        .navigate()
     }
 
     private func errorView(_ error: Error) -> some View {
@@ -146,7 +151,7 @@ struct NQueensOverviewView: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
 
-                    Text("\(savedGame.state.placedQueens.count)/\(savedGame.state.size) queens")
+                    Text("\(savedGame.state.placedFigures.count)/\(savedGame.state.size) queens")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -155,7 +160,7 @@ struct NQueensOverviewView: View {
             Spacer()
 
             VStack {
-                if savedGame.state.placedQueens.count == savedGame.state.size {
+                if savedGame.state.placedFigures.count == savedGame.state.size {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.green)
                         .font(.title2)
@@ -174,14 +179,11 @@ struct NQueensOverviewView: View {
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
-        .onTapGesture {
-            viewModel.loadGame(savedGame)
-        }
-        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-            Button("Delete", role: .destructive) {
-                viewModel.deleteGame(savedGame)
-            }
-        }
+//        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//            Button("Delete", role: .destructive) {
+//                viewModel.deleteGame(savedGame)
+//            }
+//        }
     }
 }
 
@@ -190,23 +192,31 @@ struct NQueensOverviewView: View {
         NQueensOverviewView(
             viewModel: MockNQueensOverviewViewModel(state: .data([
                 NQGameStateItem(
-                    state: NQueensGameState(
+                    state: GameState(
                         size: 8,
-                        placedQueens: [Position(row: 0, column: 0), Position(row: 1, column: 2), Position(row: 2, column: 5)],
+                        placedFigures: [FigurePosition(position: Position(row: 0, column: 0), figure: .queen),
+                                        FigurePosition(position: Position(row: 1, column: 2), figure: .queen),
+                                        FigurePosition(position: Position(row: 2, column: 5), figure: .queen)],
                         name: "8x8 - In Progress"
                     )
                 ),
                 NQGameStateItem(
-                    state: NQueensGameState(
+                    state: GameState(
                         size: 6,
-                        placedQueens: [Position(row: 0, column: 1), Position(row: 1, column: 3), Position(row: 2, column: 5), Position(row: 3, column: 0), Position(row: 4, column: 2), Position(row: 5, column: 4)],
+                        placedFigures: [FigurePosition(position: Position(row: 0, column: 1), figure: .queen),
+                                        FigurePosition(position: Position(row: 1, column: 3), figure: .queen),
+                                        FigurePosition(position: Position(row: 2, column: 5), figure: .queen),
+                                        FigurePosition(position: Position(row: 3, column: 0), figure: .queen),
+                                        FigurePosition(position: Position(row: 4, column: 2), figure: .queen),
+                                        FigurePosition(position: Position(row: 5, column: 4), figure: .queen)],
                         name: "6x6 - Completed"
                     )
                 ),
                 NQGameStateItem(
-                    state: NQueensGameState(
+                    state: GameState(
                         size: 10,
-                        placedQueens: [Position(row: 0, column: 0), Position(row: 1, column: 2)],
+                        placedFigures: [FigurePosition(position: Position(row: 0, column: 0), figure: .queen),
+                                        FigurePosition(position: Position(row: 1, column: 2), figure: .queen)],
                         name: "10x10 - Challenge"
                     )
                 )
@@ -255,26 +265,33 @@ private class MockNQueensOverviewViewModel: NQueensOverviewViewModel {
 }
 
 private struct MockNQueensRepoUseCase: NQueensRepoUseCase {
-    func load() -> [NQueensGameState] {
+    func load() -> [GameState] {
         [
-            NQueensGameState(
+            GameState(
                 size: 8,
-                placedQueens: [Position(row: 0, column: 0), Position(row: 1, column: 2), Position(row: 2, column: 5)],
+                placedFigures: [FigurePosition(position: Position(row: 0, column: 0), figure: .queen),
+                                FigurePosition(position: Position(row: 1, column: 2), figure: .queen),
+                                FigurePosition(position: Position(row: 2, column: 5), figure: .queen)],
                 name: "8x8 - In Progress"
             ),
-            NQueensGameState(
+            GameState(
                 size: 6,
-                placedQueens: [Position(row: 0, column: 1), Position(row: 1, column: 3), Position(row: 2, column: 5), Position(row: 3, column: 0), Position(row: 4, column: 2), Position(row: 5, column: 4)],
+                placedFigures: [FigurePosition(position: Position(row: 0, column: 1), figure: .queen),
+                                FigurePosition(position: Position(row: 1, column: 3), figure: .queen),
+                                FigurePosition(position: Position(row: 2, column: 5), figure: .queen),
+                                FigurePosition(position: Position(row: 3, column: 0), figure: .queen),
+                                FigurePosition(position: Position(row: 4, column: 2), figure: .queen),
+                                FigurePosition(position: Position(row: 5, column: 4), figure: .queen)],
                 name: "6x6 - Completed"
             )
         ]
     }
 
-    func save(state: NQueensGameState) {
+    func save(state: GameState) {
         // Mock implementation - would normally save to storage
     }
 
-    func delete(state: NQueensGameState) {
+    func delete(state: GameState) {
         // Mock implementation - would normally delete from storage
     }
 }

@@ -11,6 +11,7 @@ enum Screen : Hashable {
     case empty
     case puzzles
     case nQueensOverview
+    case nQueensGame(GameState?)
 }
 
 final class ScreenFactory {
@@ -22,7 +23,7 @@ final class ScreenFactory {
     
     func viewFor(screen: Screen) -> some View {
         switch screen {
-            case .empty:
+        case .empty:
             return AnyView(EmptyView())
         case .puzzles:
             return AnyView(PuzzlesView())
@@ -30,6 +31,10 @@ final class ScreenFactory {
             return AnyView(NQueensOverviewView(viewModel:
                                                 NQueensOverviewViewModel(nQueensRepo:
                                                                             container.nqRepoUseCase)))
+        case .nQueensGame(let state):
+            return AnyView(NQueensGameView(viewModel:
+                                            NQueensGameViewModel(validationUseCase: container.nqValidatorUseCase,
+                                                                 state: state)))
         }
     }
 }

@@ -11,6 +11,7 @@ final class DependencyInjectionContainer {
     private lazy var discRepo: DiscRepo = DiscRepoImpl()
     
     // Use cases
+    private(set) lazy var nqValidatorUseCase: NQueensValidationUseCase = NQueensValidationUseCaseImpl()
     private(set) lazy var nqRepoUseCase: NQueensRepoUseCase = NQueensRepoUseCaseImpl()
     
 }

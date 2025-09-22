@@ -6,8 +6,8 @@
 //
 
 protocol NQueensGameUseCase {
-    func start(size: Int) -> NQueensGameState
-    func continueGame(_ game: NQueensGameState)
-    func putQueen(at row: Int, column: Int) -> NQueensGameState
-    func undo() -> NQueensGameState
+//    func start(size: Int) -> GameState
+//    func continueGame(_ game: GameState)
+    func putQueen(at row: Int, column: Int) -> GameState
+    func undo() -> GameState
 }
