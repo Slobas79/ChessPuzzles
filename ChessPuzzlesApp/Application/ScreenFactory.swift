@@ -34,6 +34,7 @@ final class ScreenFactory {
         case .nQueensGame(let state):
             return AnyView(NQueensGameView(viewModel:
                                             NQueensGameViewModel(validationUseCase: container.nqValidatorUseCase,
+                                                                 nQueensUseCase: container.nQueensGameUseCase,
                                                                  state: state)))
         }
     }

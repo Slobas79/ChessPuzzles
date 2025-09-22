@@ -12,6 +12,7 @@ final class DependencyInjectionContainer {
     
     // Use cases
     private(set) lazy var nqValidatorUseCase: NQueensValidationUseCase = NQueensValidationUseCaseImpl()
+    private(set) lazy var nQueensGameUseCase: NQueensGameUseCase = NQueensGameUseCase()
     private(set) lazy var nqRepoUseCase: NQueensRepoUseCase = NQueensRepoUseCaseImpl()
     
 }

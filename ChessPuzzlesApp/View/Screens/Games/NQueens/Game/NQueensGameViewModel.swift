@@ -14,15 +14,17 @@ class NQueensGameViewModel {
         case gameInProgress
     }
     
+    private let nQueensUC: NQueensGameUseCase
     private let validationUC: NQueensValidationUseCase
     private(set) var boardViewModel: ChessBoardViewModel?
     private(set) var screenState: ScreenState
     
-    init(validationUseCase: NQueensValidationUseCase, state: GameState?) {
+    init(validationUseCase: NQueensValidationUseCase, nQueensUseCase: NQueensGameUseCase, state: GameState?) {
         self.validationUC = validationUseCase
+        self.nQueensUC = nQueensUseCase
         
         if let state = state {
-            self.boardViewModel = .init(size: state.size, positions: state.placedFigures)
+            self.boardViewModel = .init(state: state, useCase: nQueensUC, validation: validationUC)
             screenState = .gameInProgress
             return
         }
@@ -33,8 +35,12 @@ class NQueensGameViewModel {
         guard validationUC.isValid(size: size) else {
             throw NQueensGameError.invalidSize
         }
-        boardViewModel = .init(size: size, positions: [])
+        boardViewModel = .init(state: GameState(size: size, placedFigures: [], name: ""), useCase: nQueensUC, validation: validationUC)
         screenState = .gameInProgress
+    }
+    
+    func resetGame() {
+        boardViewModel?.reset()
     }
 }
 

@@ -28,6 +28,30 @@ struct NQueensGameView: View {
         }
     }
 
+    private var gameInProgressView: some View {
+        VStack(spacing: 16) {
+            HStack {
+                Spacer()
+                Button(action: {
+                    viewModel.resetGame()
+                }) {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+            }
+            .padding(.horizontal)
+
+            ScrollView([.horizontal, .vertical]) {
+                if let boardViewModel = viewModel.boardViewModel {
+                    ChessBoardView(viewModel: boardViewModel)
+                }
+            }
+        }
+    }
+    
     private func newGameView(minimumSize: Int) -> some View {
         VStack(spacing: 24) {
             Text("Choose Board Size")
@@ -86,18 +110,11 @@ struct NQueensGameView: View {
             errorMessage = error.localizedDescription
         }
     }
-
-    private var gameInProgressView: some View {
-        ScrollView([.horizontal, .vertical]) {
-            if let boardViewModel = viewModel.boardViewModel {
-                ChessBoardView(viewModel: boardViewModel)
-            }
-        }
-    }
 }
 
 #Preview {
     NQueensGameView(viewModel: NQueensGameViewModel(validationUseCase: NQueensValidationUseCaseImpl(),
+                                                    nQueensUseCase: NQueensGameUseCase(),
                                                     state: GameState(size: 8,
                                                                      placedFigures: [
                                                                         FigurePosition(position: Position(row: 1, column: 2), figure: .queen)],
