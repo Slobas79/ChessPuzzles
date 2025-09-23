@@ -11,7 +11,8 @@ final class NQueensGameUseCase: GameUseCase {
                          placedFigures: [],
                          name: name ?? "N-Queens \(size)x\(size)",
                          remainingFigures: [.queen : size],
-                         canReset: false)
+                         canReset: false,
+                         isSolved: false)
     }
     
     func reset(state: GameState) -> GameState {
@@ -19,7 +20,8 @@ final class NQueensGameUseCase: GameUseCase {
                          placedFigures: [],
                          name: state.name,
                          remainingFigures: [.queen : state.size],
-                         canReset: false)
+                         canReset: false,
+                         isSolved: false)
     }
     
     func selectOn(position: Position, state: GameState) -> GameState?
@@ -36,7 +38,8 @@ final class NQueensGameUseCase: GameUseCase {
                      placedFigures: newPlacedFigures,
                      name: state.name,
                      remainingFigures: [.queen : state.size - newPlacedFigures.count],
-                     canReset: !newPlacedFigures.isEmpty)
+                     canReset: !newPlacedFigures.isEmpty,
+                     isSolved: state.size == newPlacedFigures.count)
     }
     
     // dragg and drop support
@@ -48,7 +51,8 @@ final class NQueensGameUseCase: GameUseCase {
                      placedFigures: newPlacedFigures,
                      name: state.name,
                      remainingFigures: [.queen : state.size - newPlacedFigures.count],
-                     canReset: !newPlacedFigures.isEmpty)
+                     canReset: !newPlacedFigures.isEmpty,
+                     isSolved: state.size == newPlacedFigures.count)
     }
     
     func remove(from: Position, state: GameState) -> GameState {
@@ -58,6 +62,7 @@ final class NQueensGameUseCase: GameUseCase {
                      placedFigures: newPlacedFigures,
                      name: state.name,
                      remainingFigures: [.queen : state.size - newPlacedFigures.count],
-                     canReset: !newPlacedFigures.isEmpty)
+                     canReset: !newPlacedFigures.isEmpty,
+                     isSolved: state.size == newPlacedFigures.count)
     }
 }

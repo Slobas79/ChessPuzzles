@@ -24,7 +24,7 @@ class NQueensGameViewModel {
         self.nQueensUC = nQueensUseCase
         
         if let state = state {
-            self.boardViewModel = .init(state: state, useCase: nQueensUC, validation: validationUC)
+            boardViewModel = .init(state: state, useCase: nQueensUC, validation: validationUC)
             screenState = .gameInProgress
             return
         }

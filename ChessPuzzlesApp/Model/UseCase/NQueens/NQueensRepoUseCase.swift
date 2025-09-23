@@ -21,7 +21,8 @@ final class NQueensRepoUseCaseImpl: NQueensRepoUseCase {
                                 FigurePosition(position: Position(row: 2, column: 5), figure: .queen)],
                 name: "8x8 - In Progress",
                 remainingFigures: [.queen : 5],
-                canReset: true
+                canReset: true,
+                isSolved: false
             ),
             GameState(
                 size: 6,
@@ -33,7 +34,8 @@ final class NQueensRepoUseCaseImpl: NQueensRepoUseCase {
                                 FigurePosition(position: Position(row: 5, column: 4), figure: .queen)],
                 name: "6x6 - Completed",
                 remainingFigures: [.queen : 0],
-                canReset: true
+                canReset: true,
+                isSolved: true
             ),
             GameState(
                 size: 10,
@@ -44,7 +46,8 @@ final class NQueensRepoUseCaseImpl: NQueensRepoUseCase {
                                 FigurePosition(position: Position(row: 4, column: 9), figure: .queen)],
                 name: "10x10 - Challenge",
                 remainingFigures: [.queen : 5],
-                canReset: true
+                canReset: true,
+                isSolved: false
             )
         ]
         return states

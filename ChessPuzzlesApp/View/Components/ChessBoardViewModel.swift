@@ -17,6 +17,7 @@ class ChessBoardViewModel {
     private(set) var invalidPosition: Position?
     private(set) var remainingFigures: [Figure : Int]?
     private(set) var canReset: Bool = false
+    private(set) var isSolved: Bool = false
     
     private var selectedPosition: Position?
     private var selectedFigure: Figure = .queen
@@ -88,5 +89,6 @@ class ChessBoardViewModel {
         }
         remainingFigures = state.remainingFigures
         canReset = state.canReset
+        isSolved = state.isSolved
     }
 }

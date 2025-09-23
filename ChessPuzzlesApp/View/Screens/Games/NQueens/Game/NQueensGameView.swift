@@ -20,14 +20,24 @@ struct NQueensGameView: View {
 
     @ViewBuilder
     private var content: some View {
-        switch viewModel.screenState {
-        case .newGame(let minimumSize):
-            newGameView(minimumSize: minimumSize)
-        case .gameInProgress:
-            gameInProgressView
+        if viewModel.boardViewModel?.isSolved ?? false {
+            
+        } else {
+            switch viewModel.screenState {
+            case .newGame(let minimumSize):
+                newGameView(minimumSize: minimumSize)
+            case .gameInProgress:
+                gameInProgressView
+            }
         }
     }
 
+    private var gameCongratsView: some View {
+        Text("Congratulations!")
+            .font(.largeTitle)
+            .fontWeight(.bold)
+    }
+    
     private var gameInProgressView: some View {
         VStack(spacing: 16) {
             HStack {
@@ -177,5 +187,6 @@ struct NQueensGameView: View {
                                                                         FigurePosition(position: Position(row: 1, column: 2), figure: .queen)],
                                                                      name: "",
                                                                      remainingFigures: [.queen : 7],
-                                                                     canReset: true)))
+                                                                     canReset: true,
+                                                                     isSolved: false)))
 }

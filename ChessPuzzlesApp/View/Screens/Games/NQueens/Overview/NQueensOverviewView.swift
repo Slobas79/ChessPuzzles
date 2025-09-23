@@ -199,7 +199,8 @@ struct NQueensOverviewView: View {
                                         FigurePosition(position: Position(row: 2, column: 5), figure: .queen)],
                         name: "8x8 - In Progress",
                         remainingFigures: [.queen : 5],
-                        canReset: true
+                        canReset: true,
+                        isSolved: false
                     )
                 ),
                 NQGameStateItem(
@@ -213,7 +214,8 @@ struct NQueensOverviewView: View {
                                         FigurePosition(position: Position(row: 5, column: 4), figure: .queen)],
                         name: "6x6 - Completed",
                         remainingFigures: [.queen : 0],
-                        canReset: true
+                        canReset: true,
+                        isSolved: true
                     )
                 ),
                 NQGameStateItem(
@@ -223,7 +225,8 @@ struct NQueensOverviewView: View {
                                         FigurePosition(position: Position(row: 1, column: 2), figure: .queen)],
                         name: "10x10 - Challenge",
                         remainingFigures: [.queen : 8],
-                        canReset: true
+                        canReset: true,
+                        isSolved: false
                     )
                 )
             ]))
@@ -280,7 +283,8 @@ private struct MockNQueensRepoUseCase: NQueensRepoUseCase {
                                 FigurePosition(position: Position(row: 2, column: 5), figure: .queen)],
                 name: "8x8 - In Progress",
                 remainingFigures: [.queen : 5],
-                canReset: true
+                canReset: true,
+                isSolved: false
             ),
             GameState(
                 size: 6,
@@ -292,7 +296,8 @@ private struct MockNQueensRepoUseCase: NQueensRepoUseCase {
                                 FigurePosition(position: Position(row: 5, column: 4), figure: .queen)],
                 name: "6x6 - Completed",
                 remainingFigures: [.queen : 0],
-                canReset: true
+                canReset: true,
+                isSolved: true
             )
         ]
     }

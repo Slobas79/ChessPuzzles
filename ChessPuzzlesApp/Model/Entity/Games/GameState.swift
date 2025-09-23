@@ -11,5 +11,5 @@ struct GameState: Codable, Equatable, Hashable {
     let name: String
     let remainingFigures: [Figure : Int]?
     let canReset: Bool
-    let isSolved: Bool = false
+    let isSolved: Bool
 }
