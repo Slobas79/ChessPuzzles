@@ -8,7 +8,7 @@
 final class DependencyInjectionContainer {
     // Repo
     private lazy var networkingRepo: NetworkingRepo = NetworkingRepoImpl()
-    private lazy var discRepo: DiscRepo = DiscRepoImpl()
+    private lazy var localRepo: LocalRepo = LocalRepoImpl()
     
     // Use cases
     private(set) lazy var nqValidatorUseCase: NQueensValidationUseCase = NQueensValidationUseCaseImpl()
