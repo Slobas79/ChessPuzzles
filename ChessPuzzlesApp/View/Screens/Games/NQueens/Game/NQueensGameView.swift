@@ -32,18 +32,32 @@ struct NQueensGameView: View {
         VStack(spacing: 16) {
             HStack {
                 if let figures = viewModel.boardViewModel?.remainingFigures {
-                    HStack{
+                    HStack(spacing: 8) {
                         ForEach(figures.keys.sorted(by:{$0 > $1}), id: \.self) { key in
-                            Text("\(figures[key] ?? 0)")
-                            Image(systemName: key.iconName)
-                                .foregroundColor(.blue)
+                            HStack(spacing: 4) {
+                                Text("\(figures[key] ?? 0)")
+                                    .font(.headline)
+                                    .fontWeight(.semibold)
+                                    .animation(.spring(response: 0.5, dampingFraction: 0.7), value: figures[key])
+                                Image(systemName: key.iconName)
+                                    .foregroundColor(.blue)
+                                    .font(.title3)
+                            }
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(8)
+                            .scaleEffect(figures[key] == 0 ? 0.9 : 1.0)
+                            .opacity(figures[key] == 0 ? 0.6 : 1.0)
+                            .animation(.easeInOut(duration: 0.3), value: figures[key])
                         }
                     }
+                    .transition(.scale.combined(with: .opacity))
                 }
-                
+
                 Spacer()
-                
-                if  viewModel.boardViewModel?.canReset ?? false {
+
+                if viewModel.boardViewModel?.canReset ?? false {
                     Button(action: {
                         viewModel.resetGame()
                     }) {
@@ -53,6 +67,8 @@ struct NQueensGameView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.regular)
+                    .transition(.scale.combined(with: .opacity))
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8), value: viewModel.boardViewModel?.canReset)
                 }
             }
             .padding(.horizontal)
@@ -63,23 +79,34 @@ struct NQueensGameView: View {
                     let boardSize = CGFloat(boardViewModel.size + 1) * cellSize + 32 // +32 for padding
                     let availableWidth = geometry.size.width
                     let availableHeight = geometry.size.height
+                    let boardFits = boardSize <= availableWidth && boardSize <= availableHeight
 
-                    if boardSize <= availableWidth && boardSize <= availableHeight {
-                        // Board fits, no ScrollView needed
-                        VStack {
-                            ChessBoardView(viewModel: boardViewModel)
-                            Spacer()
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else {
-                        // Board doesn't fit, use ScrollView
-                        ScrollView([.horizontal, .vertical]) {
-                            ChessBoardView(viewModel: boardViewModel)
+                    Group {
+                        if boardFits {
+                            // Board fits, no ScrollView needed
+                            VStack {
+                                ChessBoardView(viewModel: boardViewModel)
+                                    .scaleEffect(1.0)
+                                    .animation(.easeInOut(duration: 0.4), value: boardViewModel.size)
+                                Spacer()
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .transition(.scale.combined(with: .opacity))
+                        } else {
+                            // Board doesn't fit, use ScrollView
+                            ScrollView([.horizontal, .vertical]) {
+                                ChessBoardView(viewModel: boardViewModel)
+                                    .scaleEffect(1.0)
+                                    .animation(.easeInOut(duration: 0.4), value: boardViewModel.size)
+                            }
+                            .transition(.scale.combined(with: .opacity))
                         }
                     }
+                    .animation(.easeInOut(duration: 0.5), value: boardFits)
                 }
             }
         }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.boardViewModel?.remainingFigures)
     }
     
     private func newGameView(minimumSize: Int) -> some View {
