@@ -6,6 +6,22 @@
 //
 
 final class NQueensGameUseCase: GameUseCase {
+    func start(size: Int, name: String?) -> GameState {
+        return GameState(size: size,
+                         placedFigures: [],
+                         name: name ?? "N-Queens \(size)x\(size)",
+                         remainingFigures: [.queen : size],
+                         canReset: false)
+    }
+    
+    func reset(state: GameState) -> GameState {
+        return GameState(size: state.size,
+                         placedFigures: [],
+                         name: state.name,
+                         remainingFigures: [.queen : state.size],
+                         canReset: false)
+    }
+    
     func selectOn(position: Position, state: GameState) -> GameState?
     {
         return remove(from: position, state: state)
@@ -16,7 +32,11 @@ final class NQueensGameUseCase: GameUseCase {
         
         var newPlacedFigures = state.placedFigures
         newPlacedFigures.append(.init(position: position, figure: figure ?? .queen))
-        return .init(size: state.size, placedFigures: newPlacedFigures, name: state.name)
+        return .init(size: state.size,
+                     placedFigures: newPlacedFigures,
+                     name: state.name,
+                     remainingFigures: [.queen : state.size - newPlacedFigures.count],
+                     canReset: !newPlacedFigures.isEmpty)
     }
     
     // dragg and drop support
@@ -24,16 +44,20 @@ final class NQueensGameUseCase: GameUseCase {
         var newPlacedFigures = state.placedFigures
         newPlacedFigures.removeAll(where: {$0.position == from})
         newPlacedFigures.append(.init(position: to, figure: figure))
-        return .init(size: state.size, placedFigures: newPlacedFigures, name: state.name)
+        return .init(size: state.size,
+                     placedFigures: newPlacedFigures,
+                     name: state.name,
+                     remainingFigures: [.queen : state.size - newPlacedFigures.count],
+                     canReset: !newPlacedFigures.isEmpty)
     }
     
     func remove(from: Position, state: GameState) -> GameState {
         var newPlacedFigures = state.placedFigures
         newPlacedFigures.removeAll(where: {$0.position == from})
-        return .init(size: state.size, placedFigures: newPlacedFigures, name: state.name)
-    }
-    
-    func reset(state: GameState) -> GameState {
-        return GameState(size: state.size, placedFigures: [], name: state.name)
+        return .init(size: state.size,
+                     placedFigures: newPlacedFigures,
+                     name: state.name,
+                     remainingFigures: [.queen : state.size - newPlacedFigures.count],
+                     canReset: !newPlacedFigures.isEmpty)
     }
 }

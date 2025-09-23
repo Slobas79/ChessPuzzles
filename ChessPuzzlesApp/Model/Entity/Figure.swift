@@ -5,7 +5,7 @@
 //  Created by Slobodan Stamenic on 21. 9. 2025..
 //
 
-enum Figure: Codable {
+enum Figure: Codable, Comparable {
     case queen
     
     var iconName: String {

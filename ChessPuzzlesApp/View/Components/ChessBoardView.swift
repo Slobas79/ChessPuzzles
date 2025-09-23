@@ -29,7 +29,8 @@ struct ChessBoardView: View {
                     ForEach(0..<viewModel.size, id: \.self) { row in
                         LazyHStack(spacing: 0) {
                             ForEach(0..<viewModel.size, id: \.self) { column in
-                                fieldButton(row: row, column: column, figure: viewModel.figures[Position(row: row, column: column)])
+                                fieldButton(row: row, column: column,
+                                            figure: viewModel.figures[Position(row: row, column: column)])
                             }
                         }
                     }

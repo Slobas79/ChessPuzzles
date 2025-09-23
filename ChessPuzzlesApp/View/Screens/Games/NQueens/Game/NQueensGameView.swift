@@ -31,22 +31,52 @@ struct NQueensGameView: View {
     private var gameInProgressView: some View {
         VStack(spacing: 16) {
             HStack {
-                Spacer()
-                Button(action: {
-                    viewModel.resetGame()
-                }) {
-                    Image(systemName: "arrow.clockwise")
-                        .font(.title2)
-                        .foregroundColor(.white)
+                if let figures = viewModel.boardViewModel?.remainingFigures {
+                    HStack{
+                        ForEach(figures.keys.sorted(by:{$0 > $1}), id: \.self) { key in
+                            Text("\(figures[key] ?? 0)")
+                            Image(systemName: key.iconName)
+                                .foregroundColor(.blue)
+                        }
+                    }
                 }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
+                
+                Spacer()
+                
+                if  viewModel.boardViewModel?.canReset ?? false {
+                    Button(action: {
+                        viewModel.resetGame()
+                    }) {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.regular)
+                }
             }
             .padding(.horizontal)
 
-            ScrollView([.horizontal, .vertical]) {
+            GeometryReader { geometry in
                 if let boardViewModel = viewModel.boardViewModel {
-                    ChessBoardView(viewModel: boardViewModel)
+                    let cellSize: CGFloat = 40.0
+                    let boardSize = CGFloat(boardViewModel.size + 1) * cellSize + 32 // +32 for padding
+                    let availableWidth = geometry.size.width
+                    let availableHeight = geometry.size.height
+
+                    if boardSize <= availableWidth && boardSize <= availableHeight {
+                        // Board fits, no ScrollView needed
+                        VStack {
+                            ChessBoardView(viewModel: boardViewModel)
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
+                        // Board doesn't fit, use ScrollView
+                        ScrollView([.horizontal, .vertical]) {
+                            ChessBoardView(viewModel: boardViewModel)
+                        }
+                    }
                 }
             }
         }
@@ -118,5 +148,7 @@ struct NQueensGameView: View {
                                                     state: GameState(size: 8,
                                                                      placedFigures: [
                                                                         FigurePosition(position: Position(row: 1, column: 2), figure: .queen)],
-                                                                     name: "")))
+                                                                     name: "",
+                                                                     remainingFigures: [.queen : 7],
+                                                                     canReset: true)))
 }

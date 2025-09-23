@@ -35,7 +35,7 @@ class NQueensGameViewModel {
         guard validationUC.isValid(size: size) else {
             throw NQueensGameError.invalidSize
         }
-        boardViewModel = .init(state: GameState(size: size, placedFigures: [], name: ""), useCase: nQueensUC, validation: validationUC)
+        boardViewModel = .init(size: size, name: nil, useCase: nQueensUC, validation: validationUC)
         screenState = .gameInProgress
     }
     
