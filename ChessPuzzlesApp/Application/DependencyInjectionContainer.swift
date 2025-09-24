@@ -7,12 +7,12 @@
 
 final class DependencyInjectionContainer {
     // Repo
-    private lazy var networkingRepo: NetworkingRepo = NetworkingRepoImpl()
     private lazy var localRepo: LocalRepo = LocalRepoImpl()
     
     // Use cases
     private(set) lazy var nqValidatorUseCase: NQueensValidationUseCase = NQueensValidationUseCaseImpl()
     private(set) lazy var nQueensGameUseCase: NQueensGameUseCase = NQueensGameUseCase()
     private(set) lazy var nqRepoUseCase: NQueensRepoUseCase = NQueensRepoUseCaseImpl()
+    private(set) lazy var settingsUseCase: SettingsUseCase = SettingsUseCaseImpl(localRepo: localRepo)
     
 }

@@ -8,21 +8,15 @@
 import SwiftUI
 
 enum ColorScheme: Int {
-    case light
-    case dark
-    case light1
-    case dark1
+    case classic
+    case brown
     
-    var color: Color {
+    var colors: (Color, Color) {
         switch self {
-        case .light:
-            return .white
-        case .dark:
-            return .black
-        case .light1:
-            return .brown.opacity(0.3)
-        case .dark1:
-            return .brown
+        case .classic:
+            return (.white, .black)
+        case .brown:
+            return (.brown.opacity(0.3), .brown)
         }
     }
 }
