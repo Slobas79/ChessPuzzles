@@ -10,6 +10,7 @@ import SwiftUI
 enum Screen : Hashable {
     case empty
     case puzzles
+    case settings
     case nQueensOverview
     case nQueensGame(GameState?)
 }
@@ -31,10 +32,12 @@ final class ScreenFactory {
             return AnyView(NQueensOverviewView(viewModel:
                                                 NQueensOverviewViewModel(nQueensRepo:
                                                                             container.nqRepoUseCase)))
+        case .settings:
+            return AnyView(SettingsView(viewModel: SettingsViewModel(useCase: container.settingsUseCase)))
         case .nQueensGame(let state):
             return AnyView(NQueensGameView(viewModel:
                                             NQueensGameViewModel(validationUseCase: container.nqValidatorUseCase,
-                                                                 nQueensUseCase: container.nQueensGameUseCase,
+                                                                 nQueensUseCase: container.nQueensGameUseCase, settingsUseCase: container.settingsUseCase,
                                                                  state: state)))
         }
     }

@@ -10,21 +10,26 @@ import Foundation
 @Observable
 class NQueensGameViewModel {
     enum ScreenState {
-        case newGame(Int) // (minimum size)
+        case newGame(Int) // (size)
         case gameInProgress
     }
     
     private let nQueensUC: NQueensGameUseCase
     private let validationUC: NQueensValidationUseCase
+    private let settingsUC: SettingsUseCase
     private(set) var boardViewModel: ChessBoardViewModel?
     private(set) var screenState: ScreenState
     
-    init(validationUseCase: NQueensValidationUseCase, nQueensUseCase: NQueensGameUseCase, state: GameState?) {
+    init(validationUseCase: NQueensValidationUseCase, nQueensUseCase: NQueensGameUseCase, settingsUseCase: SettingsUseCase, state: GameState?) {
         self.validationUC = validationUseCase
         self.nQueensUC = nQueensUseCase
+        self.settingsUC = settingsUseCase
         
         if let state = state {
-            boardViewModel = .init(state: state, useCase: nQueensUC, validation: validationUC)
+            boardViewModel = .init(state: state,
+                                   useCase: nQueensUC,
+                                   validation: validationUC,
+                                   colorScheme: settingsUC.colorScheme)
             screenState = .gameInProgress
             return
         }
@@ -35,12 +40,20 @@ class NQueensGameViewModel {
         guard validationUC.isValid(size: size) else {
             throw NQueensGameError.invalidSize
         }
-        boardViewModel = .init(size: size, name: nil, useCase: nQueensUC, validation: validationUC)
+        boardViewModel = .init(size: size,
+                               name: nil,
+                               useCase: nQueensUC,
+                               validation: validationUC,
+                               colorScheme: settingsUC.colorScheme)
         screenState = .gameInProgress
     }
     
     func resetGame() {
         boardViewModel?.reset()
+    }
+    
+    func updateSettings() {
+        boardViewModel?.colorScheme = settingsUC.colorScheme
     }
 }
 

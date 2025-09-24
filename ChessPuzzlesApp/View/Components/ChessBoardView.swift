@@ -15,6 +15,7 @@ struct ChessBoardView: View {
             LazyHStack(spacing: 0) {
                 ForEach(0..<viewModel.size, id: \.self) { column in
                     Text("\(column)")
+                        .foregroundStyle(viewModel.colorScheme.colors.1)
                         .frame(width: Const.cellS, height: Const.cellS, alignment: .trailing)
                 }
             }
@@ -22,6 +23,7 @@ struct ChessBoardView: View {
                 LazyVStack(spacing: 0) {
                     ForEach(0..<viewModel.size, id: \.self) { row in
                         Text("\(row)")
+                            .foregroundStyle(viewModel.colorScheme.colors.1)
                             .frame(width: Const.cellS, height: Const.cellS, alignment: .center)
                     }
                 }
@@ -35,7 +37,7 @@ struct ChessBoardView: View {
                         }
                     }
                 }
-                .border(.black, width: 3)
+                .border(viewModel.colorScheme.colors.1, width: 3)
             }
         }
         .padding(.horizontal, 16)
@@ -56,7 +58,7 @@ struct ChessBoardView: View {
         } label: {
             if let figure = figure {
                 Image(systemName: figure.iconName)
-                    .tint(viewModel.isInvalidPosition(row: row, column: column) ? .red : Const.figureColor)
+                    .tint(viewModel.isInvalidPosition(row: row, column: column) ? .red : viewModel.colorScheme.colors.2)
                     .font(.system(size: Const.cellS/2))
                     .frame(width: Const.cellS, height: Const.cellS)
             } else {
@@ -64,14 +66,14 @@ struct ChessBoardView: View {
                     .frame(width: Const.cellS, height: Const.cellS)
             }
         }
-        .background((row + column) % 2 == 0 ? .white : .black)
+        .background((row + column) % 2 == 0 ? viewModel.colorScheme.colors.0 : viewModel.colorScheme.colors.1)
     }
 }
 
 private struct Const {
     static let cellS: CGFloat = 40.0
-    static let lightColor: Color = .white
-    static let darkColor: Color = .black
-    static let figureColor: Color = Color.mix(Self.darkColor, Self.lightColor)
+//    static let lightColor: Color = .white
+//    static let darkColor: Color = .black
+//    static let figureColor: Color = Color.mix(Self.darkColor, Self.lightColor)
 }
 

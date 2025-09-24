@@ -11,12 +11,13 @@ enum ColorScheme: Int {
     case classic
     case brown
     
-    var colors: (Color, Color) {
+    //           light  dark   figure
+    var colors: (Color, Color, Color) {
         switch self {
         case .classic:
-            return (.white, .black)
+            return (.white, .black, .gray)
         case .brown:
-            return (.brown.opacity(0.3), .brown)
+            return (.brown.opacity(0.3), .brown.opacity(0.7), .brown)
         }
     }
 }

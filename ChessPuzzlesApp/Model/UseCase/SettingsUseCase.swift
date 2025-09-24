@@ -6,13 +6,13 @@
 //
 
 protocol SettingsUseCase {
-    var ColorScheme: ColorScheme { get set }
+    var colorScheme: ColorScheme { get set }
 }
 
 final class SettingsUseCaseImpl: SettingsUseCase {
     private var localRepo: LocalRepo
     
-    var ColorScheme: ColorScheme {
+    var colorScheme: ColorScheme {
         get {
             localRepo.colorScheme
         }

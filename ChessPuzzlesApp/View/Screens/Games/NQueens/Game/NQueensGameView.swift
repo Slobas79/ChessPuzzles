@@ -16,6 +16,9 @@ struct NQueensGameView: View {
         content
             .navigationTitle("N-Queens Puzzle")
             .navigationBarTitleDisplayMode(.large)
+            .onAppear {
+                viewModel.updateSettings()
+            }
     }
 
     @ViewBuilder
@@ -400,6 +403,7 @@ struct AnimatedStar: View {
 #Preview {
     NQueensGameView(viewModel: NQueensGameViewModel(validationUseCase: NQueensValidationUseCaseImpl(),
                                                     nQueensUseCase: NQueensGameUseCase(),
+                                                    settingsUseCase: SettingsUseCaseImpl(localRepo: LocalRepoImpl()),
                                                     state: GameState(size: 8,
                                                                      placedFigures: [
                                                                         FigurePosition(position: Position(row: 1, column: 2), figure: .queen)],

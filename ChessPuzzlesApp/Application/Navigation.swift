@@ -26,7 +26,8 @@ final class Navigation: ObservableObject {
                     Label("Puzzles", systemImage: "puzzlepiece.extension")
                 }
 
-            factory.viewFor(screen: .empty)
+            factory.viewFor(screen: .settings)
+                .environmentObject(Navigation(factory: factory))
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }

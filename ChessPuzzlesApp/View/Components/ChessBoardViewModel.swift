@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 @Observable
 class ChessBoardViewModel {
@@ -18,25 +19,32 @@ class ChessBoardViewModel {
     private(set) var remainingFigures: [Figure : Int]?
     private(set) var canReset: Bool = false
     private(set) var isSolved: Bool = false
+    var colorScheme: ColorScheme
     
     private var selectedPosition: Position?
     private var selectedFigure: Figure = .queen
     private var state: GameState
 
-    init(size: Int, name: String? ,useCase: GameUseCase, validation: GameValidationUseCase) {
+    // new game
+    init(size: Int, name: String? ,useCase: GameUseCase, validation: GameValidationUseCase, colorScheme: ColorScheme) {
         self.size = size
         self.useCase = useCase
         self.validation = validation
+        self.colorScheme = colorScheme
+        
         let state = useCase.start(size: size, name: name)
         self.figures = Dictionary(uniqueKeysWithValues: state.placedFigures.map { ($0.position, $0.figure) })
         self.state = state
         self.remainingFigures = state.remainingFigures
     }
     
-    init(state: GameState, useCase: GameUseCase, validation: GameValidationUseCase) {
+    // existing game
+    init(state: GameState, useCase: GameUseCase, validation: GameValidationUseCase, colorScheme: ColorScheme) {
         self.state = state
         self.useCase = useCase
         self.validation = validation
+        self.colorScheme = colorScheme
+        
         self.size = state.size
         self.figures = Dictionary(uniqueKeysWithValues: state.placedFigures.map { ($0.position, $0.figure) })
         self.remainingFigures = state.remainingFigures
