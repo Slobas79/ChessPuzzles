@@ -58,6 +58,12 @@ class NQueensGameViewModel {
     func updateSettings() {
         boardViewModel?.colorScheme = settingsUC.colorScheme
     }
+    
+    func formatTime(_ seconds: Double) -> String {
+        let minutes = Int(seconds) / 60
+        let remainingSeconds = Int(seconds) % 60
+        return String(format: "%02d:%02d", minutes, remainingSeconds)
+    }
 }
 
 enum NQueensGameError: Error, LocalizedError {

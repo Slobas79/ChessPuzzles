@@ -89,8 +89,8 @@ struct NQueensGameView: View {
                     .transition(.scale.combined(with: .opacity))
                 }
 
-                //add timer here
-                
+                timerView
+
                 Spacer()
 
                 if viewModel.boardViewModel?.canReset ?? false {
@@ -202,6 +202,27 @@ struct NQueensGameView: View {
             boardSizeInput = ""
         } catch {
             errorMessage = error.localizedDescription
+        }
+    }
+
+    @ViewBuilder
+    private var timerView: some View {
+        if let boardViewModel = viewModel.boardViewModel {
+            HStack(spacing: 4) {
+                Image(systemName: "timer")
+                    .foregroundColor(.secondary)
+                    .font(.caption)
+
+                Text(viewModel.formatTime(boardViewModel.time))
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundColor(.secondary)
+                    .monospacedDigit()
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(Color(.systemGray6))
+            .cornerRadius(8)
         }
     }
 }

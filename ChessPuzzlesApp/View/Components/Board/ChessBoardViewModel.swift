@@ -52,6 +52,8 @@ class ChessBoardViewModel {
         self.figures = Dictionary(uniqueKeysWithValues: state.placedFigures.map { ($0.position, $0.figure) })
         self.remainingFigures = state.remainingFigures
         self.canReset = state.canReset
+        self.isSolved = state.isSolved
+        self.time = state.time
     }
     
     func selectFigure(at position: Position) {
@@ -86,6 +88,8 @@ class ChessBoardViewModel {
     }
     
     func startTimer() {
+        guard !isSolved else { return }
+        
         cancellable = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
             .sink() { [weak self] _ in
