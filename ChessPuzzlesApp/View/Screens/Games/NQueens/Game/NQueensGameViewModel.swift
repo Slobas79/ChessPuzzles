@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 @Observable
 class NQueensGameViewModel {
@@ -31,6 +32,7 @@ class NQueensGameViewModel {
                                    validation: validationUC,
                                    colorScheme: settingsUC.colorScheme)
             screenState = .gameInProgress
+            boardViewModel?.startTimer()
             return
         }
         screenState = .newGame(validationUseCase.minimumSize)
@@ -46,6 +48,7 @@ class NQueensGameViewModel {
                                validation: validationUC,
                                colorScheme: settingsUC.colorScheme)
         screenState = .gameInProgress
+        boardViewModel?.startTimer()
     }
     
     func resetGame() {

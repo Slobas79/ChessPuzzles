@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 @Observable
 class ChessBoardViewModel {
@@ -20,11 +21,13 @@ class ChessBoardViewModel {
     private(set) var canReset: Bool = false
     private(set) var isSolved: Bool = false
     var colorScheme: ColorScheme
+    private(set) var time: Double = 0.0
     
     private var selectedPosition: Position?
     private var selectedFigure: Figure = .queen
     private var state: GameState
-
+    private var cancellable: Cancellable?
+    
     // new game
     init(size: Int, name: String? ,useCase: GameUseCase, validation: GameValidationUseCase, colorScheme: ColorScheme) {
         self.size = size
@@ -80,6 +83,14 @@ class ChessBoardViewModel {
             return true
         }
         return false
+    }
+    
+    func startTimer() {
+        cancellable = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink() { [weak self] _ in
+                self?.time += 1
+        }
     }
     
     private func unpack(_ state: GameState) {

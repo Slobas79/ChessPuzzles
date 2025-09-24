@@ -89,6 +89,8 @@ struct NQueensGameView: View {
                     .transition(.scale.combined(with: .opacity))
                 }
 
+                //add timer here
+                
                 Spacer()
 
                 if viewModel.boardViewModel?.canReset ?? false {
