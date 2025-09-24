@@ -15,5 +15,5 @@ protocol LocalRepo {
 
 final class LocalRepoImpl: LocalRepo {
     @AppStorage("colorScheme") var colorScheme: ColorScheme = .classic
-    @AppStorage("bestTime") var bestTime: Double = 0.0
+    @AppStorage("bestTime") var bestTime: Double = 75.0
 }

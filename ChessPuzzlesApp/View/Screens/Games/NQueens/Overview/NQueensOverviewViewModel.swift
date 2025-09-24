@@ -22,25 +22,21 @@ class NQueensOverviewViewModel {
     }
 
     var state: State = .idle
+    var bestTime: String = ""
 
     private let nQueensRepo: NQueensRepoUseCase
+    private let scoreUC: ScoreUseCase
+    
 
-    init(nQueensRepo: NQueensRepoUseCase) {
+    func getBestTime() {
+        bestTime = scoreUC.bestTime.formatTime()
+    }
+    
+    init(nQueensRepo: NQueensRepoUseCase, scoreUseCase: ScoreUseCase) {
         self.nQueensRepo = nQueensRepo
+        self.scoreUC = scoreUseCase
         loadSavedGames()
-    }
-
-    func startNewGame() {
-        
-    }
-
-    func loadGame(_ savedGame: NQGameStateItem) {
-    }
-
-    func deleteGame(_ savedGame: NQGameStateItem) {
-        guard case .data(let savedGames) = state else { return }
-        let updatedGames = savedGames.filter { $0.id != savedGame.id }
-        state = .data(updatedGames)
+        getBestTime()
     }
 
     private func loadSavedGames() {
@@ -57,7 +53,7 @@ class NQueensOverviewViewModel {
                     placedFigures: [FigurePosition(position: Position(row: 0, column: 0), figure: .queen),
                                     FigurePosition(position: Position(row: 1, column: 2), figure: .queen),
                                     FigurePosition(position: Position(row: 2, column: 5), figure: .queen)],
-                    name: "8x8 - In Progress",
+                    name: "8 - In Progress",
                     remainingFigures: [.queen : 5],
                     canReset: true,
                     isSolved: false,
@@ -73,7 +69,7 @@ class NQueensOverviewViewModel {
                                     FigurePosition(position: Position(row: 3, column: 0), figure: .queen),
                                     FigurePosition(position: Position(row: 4, column: 2), figure: .queen),
                                     FigurePosition(position: Position(row: 5, column: 4), figure: .queen)],
-                    name: "6x6 - Completed",
+                    name: "6 - Completed",
                     remainingFigures: [.queen : 0],
                     canReset: true,
                     isSolved: true,
@@ -88,7 +84,7 @@ class NQueensOverviewViewModel {
                                     FigurePosition(position: Position(row: 2, column: 5), figure: .queen),
                                     FigurePosition(position: Position(row: 3, column: 7), figure: .queen),
                                     FigurePosition(position: Position(row: 4, column: 9), figure: .queen)],
-                    name: "10x10 - Challenge",
+                    name: "10 - Challenge",
                     remainingFigures: [.queen : 5],
                     canReset: true,
                     isSolved: false,

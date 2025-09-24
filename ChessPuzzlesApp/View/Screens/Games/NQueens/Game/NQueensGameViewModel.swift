@@ -18,13 +18,24 @@ class NQueensGameViewModel {
     private let nQueensUC: NQueensGameUseCase
     private let validationUC: NQueensValidationUseCase
     private let settingsUC: SettingsUseCase
+    private let scoreUC: ScoreUseCase
     private(set) var boardViewModel: ChessBoardViewModel?
     private(set) var screenState: ScreenState
     
-    init(validationUseCase: NQueensValidationUseCase, nQueensUseCase: NQueensGameUseCase, settingsUseCase: SettingsUseCase, state: GameState?) {
+    var canReset: Bool {
+        guard let boardVM = boardViewModel else { return false }
+        return boardVM.canReset && !boardVM.isSolved
+    }
+    
+    init(validationUseCase: NQueensValidationUseCase,
+         nQueensUseCase: NQueensGameUseCase,
+         settingsUseCase: SettingsUseCase,
+         scoreUseCase: ScoreUseCase,
+         state: GameState?) {
         self.validationUC = validationUseCase
         self.nQueensUC = nQueensUseCase
         self.settingsUC = settingsUseCase
+        self.scoreUC = scoreUseCase
         
         if let state = state {
             boardViewModel = .init(state: state,
@@ -32,7 +43,6 @@ class NQueensGameViewModel {
                                    validation: validationUC,
                                    colorScheme: settingsUC.colorScheme)
             screenState = .gameInProgress
-            boardViewModel?.startTimer()
             return
         }
         screenState = .newGame(validationUseCase.minimumSize)
@@ -48,21 +58,17 @@ class NQueensGameViewModel {
                                validation: validationUC,
                                colorScheme: settingsUC.colorScheme)
         screenState = .gameInProgress
-        boardViewModel?.startTimer()
-    }
-    
-    func resetGame() {
-        boardViewModel?.reset()
     }
     
     func updateSettings() {
         boardViewModel?.colorScheme = settingsUC.colorScheme
     }
     
-    func formatTime(_ seconds: Double) -> String {
-        let minutes = Int(seconds) / 60
-        let remainingSeconds = Int(seconds) % 60
-        return String(format: "%02d:%02d", minutes, remainingSeconds)
+    func saveTime() {
+        if let boardVM = boardViewModel {
+            let time = boardVM.saveTime()
+            scoreUC.setBestTime(time)
+        }
     }
 }
 

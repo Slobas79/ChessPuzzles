@@ -13,13 +13,17 @@ struct NQueensGameView: View {
     @State private var errorMessage: String?
     @State private var congratsOpacity: Double = 0.0
     @State private var showCongrats: Bool = false
-
+    @State private var navTitle: String = "N-Queens Puzzle"
+    
     var body: some View {
         content
-            .navigationTitle("N-Queens Puzzle")
+            .navigationTitle(navTitle)
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
                 viewModel.updateSettings()
+            }
+            .onDisappear {
+                viewModel.saveTime()
             }
     }
 
@@ -31,6 +35,9 @@ struct NQueensGameView: View {
                 newGameView(minimumSize: minimumSize)
             case .gameInProgress:
                 gameInProgressView
+                    .onAppear {
+                        viewModel.boardViewModel?.startTimer()
+                    }
             }
 
             if showCongrats {
@@ -93,9 +100,9 @@ struct NQueensGameView: View {
 
                 Spacer()
 
-                if viewModel.boardViewModel?.canReset ?? false {
+                if viewModel.canReset {
                     Button(action: {
-                        viewModel.resetGame()
+                        viewModel.boardViewModel?.reset()
                     }) {
                         Image(systemName: "arrow.clockwise")
                             .font(.title2)
@@ -200,6 +207,7 @@ struct NQueensGameView: View {
             try viewModel.startNewGame(size: size)
             errorMessage = nil
             boardSizeInput = ""
+            navTitle = "\(size)-Queens Puzzle"
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -211,10 +219,10 @@ struct NQueensGameView: View {
             HStack(spacing: 4) {
                 Image(systemName: "timer")
                     .foregroundColor(.secondary)
-                    .font(.caption)
+                    .font(.title3)
 
-                Text(viewModel.formatTime(boardViewModel.time))
-                    .font(.caption)
+                Text(boardViewModel.time.formatTime())
+                    .font(.headline)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
                     .monospacedDigit()
@@ -230,7 +238,7 @@ struct NQueensGameView: View {
 #Preview {
     NQueensGameView(viewModel: NQueensGameViewModel(validationUseCase: NQueensValidationUseCaseImpl(),
                                                     nQueensUseCase: NQueensGameUseCase(),
-                                                    settingsUseCase: SettingsUseCaseImpl(localRepo: LocalRepoImpl()),
+                                                    settingsUseCase: SettingsUseCaseImpl(localRepo: LocalRepoImpl()), scoreUseCase: ScoreUseCaseImpl(localRepo: LocalRepoImpl()),
                                                     state: GameState(size: 8,
                                                                      placedFigures: [
                                                                         FigurePosition(position: Position(row: 1, column: 2), figure: .queen)],

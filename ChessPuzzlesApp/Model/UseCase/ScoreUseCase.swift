@@ -20,7 +20,7 @@ final class ScoreUseCaseImpl: ScoreUseCase {
     }
     
     func setBestTime(_ time: Double) {
-        if time > bestTime {
+        if time < bestTime {
             localRepo.bestTime = time
         }
     }

@@ -20,8 +20,8 @@ class ChessBoardViewModel {
     private(set) var remainingFigures: [Figure : Int]?
     private(set) var canReset: Bool = false
     private(set) var isSolved: Bool = false
-    var colorScheme: ColorScheme
     private(set) var time: Double = 0.0
+    var colorScheme: ColorScheme
     
     private var selectedPosition: Position?
     private var selectedFigure: Figure = .queen
@@ -78,6 +78,7 @@ class ChessBoardViewModel {
     
     func reset() {
         unpack(useCase.reset(state: state))
+        time = 0.0
     }
     
     func isInvalidPosition(row: Int, column: Int) -> Bool {
@@ -88,13 +89,18 @@ class ChessBoardViewModel {
     }
     
     func startTimer() {
-        guard !isSolved else { return }
+        guard !isSolved, nil == cancellable else { return }
         
         cancellable = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
             .sink() { [weak self] _ in
                 self?.time += 1
         }
+    }
+    
+    func saveTime() -> Double {
+        unpack(useCase.updateTimer(state: state, time: time))
+        return time
     }
     
     private func unpack(_ state: GameState) {
@@ -113,5 +119,9 @@ class ChessBoardViewModel {
         remainingFigures = state.remainingFigures
         canReset = state.canReset
         isSolved = state.isSolved
+        if isSolved {
+            cancellable?.cancel()
+            cancellable = nil
+        }
     }
 }

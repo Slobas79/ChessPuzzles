@@ -31,13 +31,16 @@ final class ScreenFactory {
         case .nQueensOverview:
             return AnyView(NQueensOverviewView(viewModel:
                                                 NQueensOverviewViewModel(nQueensRepo:
-                                                                            container.nqRepoUseCase)))
+                                                                            container.nqRepoUseCase,
+                                                                         scoreUseCase: container.scoreUseCase)))
         case .settings:
             return AnyView(SettingsView(viewModel: SettingsViewModel(useCase: container.settingsUseCase)))
         case .nQueensGame(let state):
             return AnyView(NQueensGameView(viewModel:
                                             NQueensGameViewModel(validationUseCase: container.nqValidatorUseCase,
-                                                                 nQueensUseCase: container.nQueensGameUseCase, settingsUseCase: container.settingsUseCase,
+                                                                 nQueensUseCase: container.nQueensGameUseCase,
+                                                                 settingsUseCase: container.settingsUseCase,
+                                                                 scoreUseCase: container.scoreUseCase,
                                                                  state: state)))
         }
     }

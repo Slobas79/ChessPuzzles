@@ -26,13 +26,17 @@ struct NQueensOverviewView: View {
         }
         .navigationTitle("N-Queens Puzzle")
         .navigationBarTitleDisplayMode(.large)
+        .onAppear {
+            viewModel.getBestTime()
+        }
     }
 
     private var puzzleDescriptionSection: some View {
         VStack(spacing: 16) {
-            Text("The N-Queens puzzle is a classic problem in computer science and mathematics. The challenge is to place N chess queens on an N×N chessboard so that no two queens threaten each other.")
-
-            Text("This means no two queens can be in the same row, column, or diagonal. It's a perfect example of a constraint satisfaction problem and backtracking algorithm.")
+            Text("The N-Queens puzzle is a classic problem in computer science and mathematics. The challenge is to place N chess queens on an N×N chessboard so that no two queens threaten each other. This means no two queens can be in the same row, column, or diagonal.")
+            
+            Text("Best time: " + viewModel.bestTime)
+                .font(.headline)
         }
         .font(.body)
         .multilineTextAlignment(.leading)
@@ -179,11 +183,6 @@ struct NQueensOverviewView: View {
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
-//        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-//            Button("Delete", role: .destructive) {
-//                viewModel.deleteGame(savedGame)
-//            }
-//        }
     }
 }
 
@@ -197,7 +196,7 @@ struct NQueensOverviewView: View {
                         placedFigures: [FigurePosition(position: Position(row: 0, column: 0), figure: .queen),
                                         FigurePosition(position: Position(row: 1, column: 2), figure: .queen),
                                         FigurePosition(position: Position(row: 2, column: 5), figure: .queen)],
-                        name: "8x8 - In Progress",
+                        name: "8 - In Progress",
                         remainingFigures: [.queen : 5],
                         canReset: true,
                         isSolved: false,
@@ -213,7 +212,7 @@ struct NQueensOverviewView: View {
                                         FigurePosition(position: Position(row: 3, column: 0), figure: .queen),
                                         FigurePosition(position: Position(row: 4, column: 2), figure: .queen),
                                         FigurePosition(position: Position(row: 5, column: 4), figure: .queen)],
-                        name: "6x6 - Completed",
+                        name: "6 - Completed",
                         remainingFigures: [.queen : 0],
                         canReset: true,
                         isSolved: true,
@@ -225,7 +224,7 @@ struct NQueensOverviewView: View {
                         size: 10,
                         placedFigures: [FigurePosition(position: Position(row: 0, column: 0), figure: .queen),
                                         FigurePosition(position: Position(row: 1, column: 2), figure: .queen)],
-                        name: "10x10 - Challenge",
+                        name: "10 - Challenge",
                         remainingFigures: [.queen : 8],
                         canReset: true,
                         isSolved: false,
@@ -237,82 +236,10 @@ struct NQueensOverviewView: View {
     }
 }
 
-#Preview("Loading State") {
-    NavigationView {
-        NQueensOverviewView(
-            viewModel: MockNQueensOverviewViewModel(state: .loading)
-        )
-    }
-}
-
-#Preview("Empty State") {
-    NavigationView {
-        NQueensOverviewView(
-            viewModel: MockNQueensOverviewViewModel(state: .data([]))
-        )
-    }
-}
-
-#Preview("Error State") {
-    NavigationView {
-        NQueensOverviewView(
-            viewModel: MockNQueensOverviewViewModel(state: .error(MockError.loadingFailed))
-        )
-    }
-}
-
-#Preview("Idle State") {
-    NavigationView {
-        NQueensOverviewView(
-            viewModel: MockNQueensOverviewViewModel(state: .idle)
-        )
-    }
-}
-
 private class MockNQueensOverviewViewModel: NQueensOverviewViewModel {
     init(state: State) {
-        super.init(nQueensRepo: MockNQueensRepoUseCase())
+        super.init(nQueensRepo: NQueensRepoUseCaseMock(), scoreUseCase: ScoreUseCaseImpl(localRepo: LocalRepoImpl()))
         self.state = state
-    }
-}
-
-private struct MockNQueensRepoUseCase: NQueensRepoUseCase {
-    func load() -> [GameState] {
-        [
-            GameState(
-                size: 8,
-                placedFigures: [FigurePosition(position: Position(row: 0, column: 0), figure: .queen),
-                                FigurePosition(position: Position(row: 1, column: 2), figure: .queen),
-                                FigurePosition(position: Position(row: 2, column: 5), figure: .queen)],
-                name: "8x8 - In Progress",
-                remainingFigures: [.queen : 5],
-                canReset: true,
-                isSolved: false,
-                time: 85.4
-            ),
-            GameState(
-                size: 6,
-                placedFigures: [FigurePosition(position: Position(row: 0, column: 1), figure: .queen),
-                                FigurePosition(position: Position(row: 1, column: 3), figure: .queen),
-                                FigurePosition(position: Position(row: 2, column: 5), figure: .queen),
-                                FigurePosition(position: Position(row: 3, column: 0), figure: .queen),
-                                FigurePosition(position: Position(row: 4, column: 2), figure: .queen),
-                                FigurePosition(position: Position(row: 5, column: 4), figure: .queen)],
-                name: "6x6 - Completed",
-                remainingFigures: [.queen : 0],
-                canReset: true,
-                isSolved: true,
-                time: 203.7
-            )
-        ]
-    }
-
-    func save(state: GameState) {
-        // Mock implementation - would normally save to storage
-    }
-
-    func delete(state: GameState) {
-        // Mock implementation - would normally delete from storage
     }
 }
 
