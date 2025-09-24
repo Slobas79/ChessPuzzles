@@ -105,6 +105,7 @@ struct NQueensGameView: View {
                     .animation(.spring(response: 0.6, dampingFraction: 0.8), value: viewModel.boardViewModel?.canReset)
                 }
             }
+            .frame(height: 60)
             .padding(.horizontal)
 
             GeometryReader { geometry in
@@ -213,5 +214,6 @@ struct NQueensGameView: View {
                                                                      name: "",
                                                                      remainingFigures: [.queen : 7],
                                                                      canReset: true,
-                                                                     isSolved: false)))
+                                                                     isSolved: false,
+                                                                     time: 42.7)))
 }

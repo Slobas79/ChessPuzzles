@@ -200,7 +200,8 @@ struct NQueensOverviewView: View {
                         name: "8x8 - In Progress",
                         remainingFigures: [.queen : 5],
                         canReset: true,
-                        isSolved: false
+                        isSolved: false,
+                        time: 65.2
                     )
                 ),
                 NQGameStateItem(
@@ -215,7 +216,8 @@ struct NQueensOverviewView: View {
                         name: "6x6 - Completed",
                         remainingFigures: [.queen : 0],
                         canReset: true,
-                        isSolved: true
+                        isSolved: true,
+                        time: 156.8
                     )
                 ),
                 NQGameStateItem(
@@ -226,7 +228,8 @@ struct NQueensOverviewView: View {
                         name: "10x10 - Challenge",
                         remainingFigures: [.queen : 8],
                         canReset: true,
-                        isSolved: false
+                        isSolved: false,
+                        time: 47.1
                     )
                 )
             ]))
@@ -284,7 +287,8 @@ private struct MockNQueensRepoUseCase: NQueensRepoUseCase {
                 name: "8x8 - In Progress",
                 remainingFigures: [.queen : 5],
                 canReset: true,
-                isSolved: false
+                isSolved: false,
+                time: 85.4
             ),
             GameState(
                 size: 6,
@@ -297,7 +301,8 @@ private struct MockNQueensRepoUseCase: NQueensRepoUseCase {
                 name: "6x6 - Completed",
                 remainingFigures: [.queen : 0],
                 canReset: true,
-                isSolved: true
+                isSolved: true,
+                time: 203.7
             )
         ]
     }

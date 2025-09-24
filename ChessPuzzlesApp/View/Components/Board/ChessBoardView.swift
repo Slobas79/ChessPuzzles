@@ -16,17 +16,20 @@ struct ChessBoardView: View {
                 ForEach(0..<viewModel.size, id: \.self) { column in
                     Text("\(columnLabel(column))")
                         .foregroundStyle(viewModel.colorScheme.colors.1)
-                        .frame(width: Const.cellS, height: Const.cellS, alignment: .trailing)
+                        .frame(width: Const.cellS, height: Const.cellS, alignment: .center)
                 }
             }
+            .padding(.leading, 30)
+            
             LazyHStack(spacing: 0) {
                 LazyVStack(spacing: 0) {
                     ForEach(0..<viewModel.size, id: \.self) { row in
-                        Text("\(row)")
+                        Text("\(row + 1)")
                             .foregroundStyle(viewModel.colorScheme.colors.1)
                             .frame(width: Const.cellS, height: Const.cellS, alignment: .center)
                     }
                 }
+                
                 LazyVStack(spacing: 0) {
                     ForEach(0..<viewModel.size, id: \.self) { row in
                         LazyHStack(spacing: 0) {
@@ -40,7 +43,7 @@ struct ChessBoardView: View {
                 .border(viewModel.colorScheme.colors.1, width: 3)
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.trailing, 16)
     }
     
     @ViewBuilder
@@ -73,7 +76,7 @@ struct ChessBoardView: View {
           if viewModel.size <= 26 {
               return String(Character(UnicodeScalar(65 + column)!)) // A-Z
           } else {
-              return "\(column)"
+              return "\(column + 1)"
           }
       }
 

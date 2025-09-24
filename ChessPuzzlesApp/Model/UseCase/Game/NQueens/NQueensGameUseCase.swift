@@ -12,7 +12,8 @@ final class NQueensGameUseCase: GameUseCase {
                          name: name ?? "N-Queens \(size)x\(size)",
                          remainingFigures: [.queen : size],
                          canReset: false,
-                         isSolved: false)
+                         isSolved: false,
+                         time: 0.0)
     }
     
     func reset(state: GameState) -> GameState {
@@ -21,7 +22,8 @@ final class NQueensGameUseCase: GameUseCase {
                          name: state.name,
                          remainingFigures: [.queen : state.size],
                          canReset: false,
-                         isSolved: false)
+                         isSolved: false,
+                         time: 0.0)
     }
     
     func selectOn(position: Position, state: GameState) -> GameState?
@@ -39,10 +41,10 @@ final class NQueensGameUseCase: GameUseCase {
                      name: state.name,
                      remainingFigures: [.queen : state.size - newPlacedFigures.count],
                      canReset: !newPlacedFigures.isEmpty,
-                     isSolved: state.size == newPlacedFigures.count)
+                     isSolved: state.size == newPlacedFigures.count,
+                     time: state.time)
     }
     
-    // dragg and drop support
     func move(figure: Figure, from: Position, to: Position, state: GameState) -> GameState {
         var newPlacedFigures = state.placedFigures
         newPlacedFigures.removeAll(where: {$0.position == from})
@@ -52,7 +54,8 @@ final class NQueensGameUseCase: GameUseCase {
                      name: state.name,
                      remainingFigures: [.queen : state.size - newPlacedFigures.count],
                      canReset: !newPlacedFigures.isEmpty,
-                     isSolved: state.size == newPlacedFigures.count)
+                     isSolved: state.size == newPlacedFigures.count,
+                     time: state.time)
     }
     
     func remove(from: Position, state: GameState) -> GameState {
@@ -63,6 +66,17 @@ final class NQueensGameUseCase: GameUseCase {
                      name: state.name,
                      remainingFigures: [.queen : state.size - newPlacedFigures.count],
                      canReset: !newPlacedFigures.isEmpty,
-                     isSolved: state.size == newPlacedFigures.count)
+                     isSolved: state.size == newPlacedFigures.count,
+                     time: state.time)
+    }
+    
+    func updateTimer(state: GameState, time: Double) -> GameState {
+        return .init(size: state.size,
+                     placedFigures: state.placedFigures,
+                     name: state.name,
+                     remainingFigures: state.remainingFigures,
+                     canReset: state.canReset,
+                     isSolved: state.isSolved,
+                     time: state.time + time)
     }
 }

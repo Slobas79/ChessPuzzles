@@ -12,4 +12,5 @@ struct GameState: Codable, Equatable, Hashable {
     let remainingFigures: [Figure : Int]?
     let canReset: Bool
     let isSolved: Bool
+    let time: Double
 }

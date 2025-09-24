@@ -12,4 +12,5 @@ protocol GameUseCase {
     func set(figure: Figure?, on position: Position, state: GameState) -> GameState
     func move(figure: Figure, from: Position, to: Position, state: GameState) -> GameState
     func remove(from: Position, state: GameState) -> GameState
+    func updateTimer(state: GameState, time: Double) -> GameState
 }

@@ -60,7 +60,8 @@ class NQueensOverviewViewModel {
                     name: "8x8 - In Progress",
                     remainingFigures: [.queen : 5],
                     canReset: true,
-                    isSolved: false
+                    isSolved: false,
+                    time: 120.5
                 )
             ),
             NQGameStateItem(
@@ -75,7 +76,8 @@ class NQueensOverviewViewModel {
                     name: "6x6 - Completed",
                     remainingFigures: [.queen : 0],
                     canReset: true,
-                    isSolved: true
+                    isSolved: true,
+                    time: 89.3
                 )
             ),
             NQGameStateItem(
@@ -89,7 +91,8 @@ class NQueensOverviewViewModel {
                     name: "10x10 - Challenge",
                     remainingFigures: [.queen : 5],
                     canReset: true,
-                    isSolved: false
+                    isSolved: false,
+                    time: 245.7
                 )
             )
         ]
