@@ -5,11 +5,11 @@
 //  Created by Slobodan Stamenic on 19. 9. 2025..
 //
 
-final class NQueensGameUseCase: GameUseCase {
+class NQueensGameUseCase: GameUseCase {
     func start(size: Int, name: String?) -> GameState {
         return GameState(size: size,
                          placedFigures: [],
-                         name: name ?? "N-Queens \(size)x\(size)",
+                         name: name ?? "\(size)-Queens",
                          remainingFigures: [.queen : size],
                          canReset: false,
                          isSolved: false,

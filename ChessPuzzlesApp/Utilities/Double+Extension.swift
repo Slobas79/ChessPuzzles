@@ -7,6 +7,9 @@
 
 extension Double {
     func formatTime() -> String {
+        guard self >= 0 else {
+            return "00:00"
+        }
         let minutes = Int(self) / 60
         let remainingSeconds = Int(self) % 60
         return String(format: "%02d:%02d", minutes, remainingSeconds)

@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		7BF958A82E8498DF00F8FA06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7BB56A582E3A2E54006CE2CC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7BB56A5F2E3A2E54006CE2CC;
+			remoteInfo = ChessPuzzles;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		7BB56A602E3A2E54006CE2CC /* ChessPuzzles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessPuzzles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BF958A42E8498DF00F8FA06 /* ChessPuzzlesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChessPuzzlesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = ChessPuzzlesApp;
 			sourceTree = "<group>";
 		};
+		7BF958A52E8498DF00F8FA06 /* ChessPuzzlesTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChessPuzzlesTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		7BB56A5D2E3A2E54006CE2CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7BF958A12E8498DF00F8FA06 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				7BB56A622E3A2E54006CE2CC /* ChessPuzzlesApp */,
+				7BF958A52E8498DF00F8FA06 /* ChessPuzzlesTests */,
 				7BB56A612E3A2E54006CE2CC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				7BB56A602E3A2E54006CE2CC /* ChessPuzzles.app */,
+				7BF958A42E8498DF00F8FA06 /* ChessPuzzlesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 7BB56A602E3A2E54006CE2CC /* ChessPuzzles.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7BF958A32E8498DF00F8FA06 /* ChessPuzzlesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7BF958AA2E8498DF00F8FA06 /* Build configuration list for PBXNativeTarget "ChessPuzzlesTests" */;
+			buildPhases = (
+				7BF958A02E8498DF00F8FA06 /* Sources */,
+				7BF958A12E8498DF00F8FA06 /* Frameworks */,
+				7BF958A22E8498DF00F8FA06 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7BF958A92E8498DF00F8FA06 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7BF958A52E8498DF00F8FA06 /* ChessPuzzlesTests */,
+			);
+			name = ChessPuzzlesTests;
+			packageProductDependencies = (
+			);
+			productName = ChessPuzzlesTests;
+			productReference = 7BF958A42E8498DF00F8FA06 /* ChessPuzzlesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -77,11 +125,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1610;
+				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					7BB56A5F2E3A2E54006CE2CC = {
 						CreatedOnToolsVersion = 16.1;
+					};
+					7BF958A32E8498DF00F8FA06 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 7BB56A5F2E3A2E54006CE2CC;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				7BB56A5F2E3A2E54006CE2CC /* ChessPuzzles */,
+				7BF958A32E8498DF00F8FA06 /* ChessPuzzlesTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7BB56A5E2E3A2E54006CE2CC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7BF958A22E8498DF00F8FA06 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7BF958A02E8498DF00F8FA06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7BF958A92E8498DF00F8FA06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7BB56A5F2E3A2E54006CE2CC /* ChessPuzzles */;
+			targetProxy = 7BF958A82E8498DF00F8FA06 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7BB56A6C2E3A2E55006CE2CC /* Debug */ = {
@@ -306,6 +381,42 @@
 			};
 			name = Release;
 		};
+		7BF958AB2E8498DF00F8FA06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sloba.ChessPuzzlesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChessPuzzles.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChessPuzzles";
+			};
+			name = Debug;
+		};
+		7BF958AC2E8498DF00F8FA06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sloba.ChessPuzzlesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChessPuzzles.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ChessPuzzles";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -323,6 +434,15 @@
 			buildConfigurations = (
 				7BB56A6F2E3A2E55006CE2CC /* Debug */,
 				7BB56A702E3A2E55006CE2CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7BF958AA2E8498DF00F8FA06 /* Build configuration list for PBXNativeTarget "ChessPuzzlesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7BF958AB2E8498DF00F8FA06 /* Debug */,
+				7BF958AC2E8498DF00F8FA06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
