@@ -118,7 +118,9 @@ class ChessBoardViewModel {
         }
         remainingFigures = state.remainingFigures
         canReset = state.canReset
-        isSolved = state.isSolved
+        if nil == invalidPosition {
+            isSolved = state.isSolved
+        }
         if isSolved {
             cancellable?.cancel()
             cancellable = nil
